@@ -32,3 +32,92 @@
 @media(max-width:1000px){.inventory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.inventory-preview img{width:95px;height:125px}.inventory-preview img:first-child{display:none}.inventory-banner-copy{max-width:350px}}
 @media(max-width:760px){.inventory-banner-copy{max-width:none;flex:1}.inventory-banner h2{font-size:21px}.inventory-preview{display:none}.inventory-banner{padding:23px}.inventory-intro{padding:20px;flex-wrap:wrap;gap:15px}.inventory-search-row{grid-template-columns:1fr 1fr}.inventory-search-row>input{grid-column:1/-1}.inventory-grid{gap:12px}.inventory-image img{height:210px}.inventory-card-body{padding:16px}.inventory-card-actions{flex-wrap:wrap;gap:7px}.inventory-card h2{font-size:15px}.inventory-card-body>p{font-size:11px}.inventory-intro p{font-size:11px}}
 @media(max-width:520px){.skill-tabs{gap:24px}.skill-tabs a{font-size:11px}.inventory-intro{margin-bottom:22px;padding:19px}.inventory-total{font-size:40px}.inventory-intro>div{font-size:13px}.inventory-intro small{font-size:9px}.inventory-grid{grid-template-columns:1fr}.inventory-image img{height:250px}.inventory-card-body{padding:20px}.inventory-card h2{font-size:18px}.inventory-card-actions{flex-wrap:nowrap}.inventory-card-actions .button,.inventory-card-actions .text-button{font-size:11px}.inventory-card-body>p{font-size:12px}.inventory-meta{font-size:10px}.inventory-kicker{font-size:10px}.inventory-variations{font-size:11px}.inventory-banner .eyebrow{font-size:8px}.skill-detail figure img{height:215px}}
+
+/* Detailed overview handstand illustration. */
+.hero-art{right:6px;bottom:0;width:42%;height:100%;pointer-events:none}
+.hero-art .hero-backdrop{position:absolute;inset:0;width:100%;height:100%}
+.hero-art .hero-athlete{position:absolute;bottom:5%;left:0;width:100%;height:92%;object-fit:contain;object-position:center bottom}
+.hero-art-caption{position:absolute;right:7%;bottom:8%;display:flex;align-items:center;gap:5px;padding:7px 10px;border-radius:20px;background:#fffdf1ec;color:#78866a;font-size:7px;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;box-shadow:0 3px 12px #354b2f08}
+.hero-art-caption svg{width:12px;height:12px;padding:2px;border-radius:50%;background:#e8eeda;stroke:#758965}
+@media(max-width:1000px) and (min-width:761px){.hero-art{right:0;width:38%}.hero-art-caption{right:4%;font-size:6px;padding:6px 7px}}
+@media(max-width:520px){.hero-art{right:0;width:35%;opacity:1}.hero-art .hero-athlete{height:88%;bottom:7%}.hero-art-caption{display:none}}
+
+/* Expanded movement library. */
+.inventory-guidance{font-size:12px;color:#6d7b64;line-height:1.7;max-width:750px;margin:-10px 0 24px}
+.inventory-search-row{grid-template-columns:minmax(170px,1fr) repeat(3,minmax(110px,135px))}
+.inventory-controls .filter-chips{flex-wrap:wrap}
+.inventory-display{display:flex;align-items:center;gap:17px}
+.inventory-view{display:flex;gap:3px;padding:3px;border:1px solid var(--line);border-radius:8px;background:#eeefe7}
+.inventory-view button{padding:6px 11px;font-size:10px;color:#718165;border-radius:5px}
+.inventory-view button[aria-pressed=true]{background:#fffef9;color:var(--forest);box-shadow:0 1px 4px #23352b0c}
+.inventory-list{grid-template-columns:1fr;gap:12px}
+.inventory-list .inventory-card{display:grid;grid-template-columns:145px minmax(0,1fr);border-radius:12px}
+.inventory-list .inventory-image{border-bottom:0;border-right:1px solid var(--line);height:100%}
+.inventory-list .inventory-image img{height:170px;padding:12px 8px 28px}
+.inventory-list .inventory-card-body{position:relative;padding:15px 20px}
+.inventory-list .inventory-kicker{justify-content:flex-start;gap:12px}
+.inventory-list .inventory-card h2{margin:4px 0 6px}
+.inventory-list .inventory-card-body>p{margin:0 0 10px;flex:initial}
+.inventory-list .inventory-meta,.inventory-list .inventory-variations{margin-right:205px}
+.inventory-list .inventory-variations{margin-top:3px;margin-bottom:0}
+.inventory-list .inventory-card-actions{position:absolute;bottom:18px;right:20px;border:0;padding:0;gap:15px}
+.skill-tracking-note{font-size:12px;line-height:1.7;color:#63745b;background:#f0f2e9;border-left:3px solid #b6c3a8;padding:12px 14px;border-radius:4px;margin:16px 0}
+.skill-references{margin:21px 0 0;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:9px}
+.skill-references>span{font-size:10px;color:#7b8671;text-transform:uppercase;letter-spacing:.7px}
+.skill-references a{font-size:11px;color:#667c56;display:inline-flex;align-items:center;gap:5px;text-decoration:underline;text-underline-offset:3px;line-height:1.6}
+.skill-references svg{width:13px;height:13px;flex-shrink:0}
+.entry-tracking-note{margin:12px 0 0;line-height:1.6}
+@media(max-width:1000px){.inventory-search-row{grid-template-columns:repeat(3,minmax(0,1fr))}.inventory-search-row>input{grid-column:1/-1}}
+@media(max-width:760px){.inventory-list .inventory-card{grid-template-columns:115px minmax(0,1fr)}.inventory-list .inventory-meta,.inventory-list .inventory-variations{margin-right:0}.inventory-list .inventory-card-actions{position:static;border-top:1px solid var(--line);margin-top:8px;padding-top:9px}.inventory-list .inventory-image img{height:180px}.inventory-list .inventory-card-body{padding:14px}}
+@media(max-width:520px){.inventory-search-row{gap:8px}.inventory-search-row select{padding-left:8px;padding-right:22px;font-size:10px;min-width:0}.inventory-guidance{font-size:11px}.inventory-display{gap:10px}.inventory-view button{padding:5px 8px}.inventory-results-heading{font-size:10px}.inventory-list .inventory-card{grid-template-columns:90px minmax(0,1fr)}.inventory-list .inventory-image img{height:140px}.inventory-list .inventory-status{left:5px;bottom:9px;font-size:7px;padding:3px 5px}.inventory-list .inventory-card h2{font-size:15px}.inventory-list .inventory-card-body>p{font-size:10px}.inventory-list .inventory-kicker{font-size:8px;gap:8px;flex-wrap:wrap}.inventory-list .inventory-card-actions{gap:8px;flex-wrap:wrap}.inventory-list .inventory-card-actions .button,.inventory-list .inventory-card-actions .text-button{font-size:9px}.inventory-list .inventory-meta{font-size:8px}.inventory-list .inventory-variations{font-size:9px}}
+
+.inventory-pose{font-size:9px;line-height:1.5;color:#74816b;margin:0 0 9px}.inventory-list .inventory-pose{font-size:9px;margin-bottom:5px}
+
+/* Endurance circuits */
+.endurance-circuits{margin:36px 0 40px}
+.endurance-circuits>.section-heading{align-items:end;margin-bottom:10px}
+.endurance-circuits .eyebrow{font-size:8px;color:#809075;margin-bottom:9px}
+.endurance-circuits>.panel-subtitle{max-width:670px;line-height:1.8;margin-bottom:23px}
+.circuit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.circuit-card{display:flex;flex-direction:column;padding:25px;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.circuit-card-heading{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.circuit-card-heading img{width:90px;height:90px;object-fit:contain;background:#f4f4ed;border-radius:13px;mix-blend-mode:multiply}
+.circuit-category{font-size:9px;letter-spacing:1.3px;text-transform:uppercase;color:#688159;font-weight:600}
+.circuit-card h3{font-size:21px;letter-spacing:-.6px;margin:8px 0}
+.circuit-card-heading p{font-size:11px;color:#718268}
+.circuit-description{font-size:12px;line-height:1.8;color:#7c8872;margin:16px 0 10px;max-width:350px}
+.circuit-moves{list-style:none;padding:0;margin:10px 0 17px;counter-reset:circuit-step}
+.circuit-moves li{display:flex;align-items:center;gap:11px;min-height:56px;border-bottom:1px solid var(--line);font-size:12px;counter-increment:circuit-step;padding:10px 0}
+.circuit-moves li:before{content:counter(circuit-step,decimal-leading-zero);font-size:9px;color:#97a08b;font-variant-numeric:tabular-nums}
+.circuit-moves li>span{flex:1;min-width:0}
+.circuit-moves strong{font-size:15px;font-weight:600;white-space:nowrap;text-align:right}
+.circuit-moves small{display:block;color:#8b957f;font-size:9px;font-weight:400;line-height:1.5;margin-top:3px}
+.circuit-rest{display:flex;gap:8px;align-items:flex-start;font-size:10px;color:#6f8063;line-height:1.7}
+.circuit-rest svg{width:15px;height:15px;flex-shrink:0;margin-top:1px}
+.circuit-card-footer{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-top:auto;padding-top:23px}
+.circuit-card-footer small{font-size:9px;line-height:1.7;max-width:140px}
+.circuit-card-footer .button{font-size:11px;white-space:nowrap}
+.cycle-block{padding:26px;background:#eaf0e3;border:1px solid #dce5d4;border-radius:17px;margin-top:22px}
+.cycle-block h3{font-size:17px;letter-spacing:-.4px}
+.cycle-block>.section-heading{margin-bottom:10px}
+.cycle-block>p{font-size:12px;line-height:1.8;color:#708065;max-width:700px}
+.cycle-weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin:23px 0}
+.cycle-weeks>div{border-left:2px solid #b8c7a9;padding-left:14px}
+.cycle-weeks span{font-size:8px;color:#6f805f;letter-spacing:.7px}
+.cycle-weeks h4{font-size:12px;line-height:1.5;margin:8px 0}
+.cycle-weeks p{font-size:10px;line-height:1.8;color:#76856b}
+.cycle-block>small{font-size:9px;line-height:1.7;display:block}
+.circuit-prescription{padding:18px 20px;margin:20px 0;background:#f0f3e9;border-radius:12px}
+.circuit-prescription>.field-hint{margin-top:12px}
+.circuit-extras{border:1px solid var(--line);padding:16px;border-radius:10px;margin:22px 0}
+.circuit-extras legend{font-size:12px;font-weight:600;padding:0 5px}
+.circuit-extras>.field-hint{margin-bottom:14px}
+.circuit-extras label{font-size:10px}
+.circuit-source{margin-top:21px;font-size:11px;color:#748568;line-height:1.8}
+.circuit-source summary{cursor:pointer;font-weight:600;min-height:30px}
+.circuit-source p{margin:7px 0}
+.circuit-source a{text-decoration:underline;text-underline-offset:3px}
+.circuit-session-note{background:#edf2e5;border:1px solid #dae4cd;border-radius:10px;padding:15px 17px;margin-bottom:22px;font-size:12px;line-height:1.7}
+.circuit-session-note p{font-size:11px;color:#748469;margin-top:4px}
+@media(max-width:1000px){.circuit-card{padding:20px}.circuit-card h3{font-size:18px}.circuit-card-heading img{width:75px;height:75px}.cycle-weeks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.circuit-grid{grid-template-columns:1fr;gap:16px}.circuit-card{padding:22px}.circuit-card h3{font-size:21px}.circuit-card-heading img{width:85px;height:85px}.cycle-block{padding:22px}.cycle-block>.section-heading{align-items:start;flex-direction:column;gap:9px}.cycle-weeks{gap:18px 12px}.circuit-extras .form-grid.three{grid-template-columns:1fr}.circuit-extras .form-grid.three>label:first-child{grid-column:auto}.circuit-prescription{padding:17px}.circuit-card-footer .button{padding:9px 11px}.circuit-card-footer small{max-width:145px}}

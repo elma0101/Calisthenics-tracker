@@ -37,7 +37,8 @@ test('inventory practice status and skill records stay separate from other axes'
 });
 test('expanded catalog sessions and goals survive backup round trips',()=>{
   const state=F.emptyState();
-  state.sessions=[session('skills',F.EXERCISES.skills.map(ex=>({exercise:ex.id,variation:ex.variations[0],sets:3,value:ex.unit==='sec'?10.5:5})))];
+  const entries=F.EXERCISES.skills.map(ex=>({exercise:ex.id,variation:ex.variations[0],sets:3,value:ex.unit==='sec'?10.5:5}));
+  for(let i=0;i<entries.length;i+=30)state.sessions.push(session('skills',entries.slice(i,i+30),'catalog-'+i));
   state.goals=F.EXERCISES.skills.map(ex=>({id:'goal-'+ex.id,axis:'skills',exercise:ex.id,variation:ex.variations[0],target:ex.unit==='sec'?21:10}));
   const restored=F.validateState(JSON.parse(JSON.stringify(state)));
   assert.deepEqual(restored,state);

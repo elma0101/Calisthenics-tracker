@@ -1,5 +1,7 @@
 (function (root) {
   'use strict';
+  const CATALOG = typeof module !== 'undefined' && module.exports ? require('./skill-catalog.js') : root.FormaCatalog;
+  const CIRCUITS = typeof module !== 'undefined' && module.exports ? require('./endurance-circuits.js') : root.FormaCircuits;
   const AXES = {
     skills: { name: 'Skills', eyebrow: 'CONTROL & TECHNIQUE', color: '#d5724d', icon: 'skill', description: 'Own the movement.', unit: 'sec' },
     endurance: { name: 'Endurance', eyebrow: 'CAPACITY & CONSISTENCY', color: '#64856c', icon: 'endurance', description: 'Go a little further.', unit: 'reps' },
@@ -64,19 +66,23 @@
     'ring-support': ['Push', 'Rings', true, 'Build a stable straight-arm support position on gymnastic rings.'],
     'skin-the-cat': ['Pull', 'Rings', false, 'Practice a controlled rotation through an inverted hang on rings.']
   };
+  EXERCISES.endurance.push(...CIRCUITS.exercises);
   EXERCISES.skills.forEach(ex => {
     const [category, equipment, foundation, description] = SKILL_DETAILS[ex.id];
-    Object.assign(ex, { category, equipment, foundation, description });
+    Object.assign(ex, { category, equipment, foundation, description, level: foundation ? 'Foundation' : 'Developing', sources: ['gymfit'], aliases: [] }, CATALOG.existing[ex.id]);
   });
-  function filterSkills(state, { query = '', category = 'all', status = 'all', unit = 'all' } = {}) {
+  EXERCISES.skills.push(...CATALOG.additions);
+  const SKILL_SOURCES = CATALOG.sources;
+  function filterSkills(state, { query = '', category = 'all', status = 'all', unit = 'all', level = 'all' } = {}) {
     const normalize = text => text.toLowerCase().replace(/[-–—]/g, ' ').replace(/\s+/g, ' ').trim();
     const words = normalize(query).split(' ').filter(Boolean);
     const practiced = new Set(state.sessions.filter(s => s.axis === 'skills').flatMap(s => s.entries.map(e => e.exercise)));
     return EXERCISES.skills.filter(ex => {
-      const searchable = normalize([ex.name, ex.category, ex.equipment, ex.description, ...ex.variations].join(' '));
+      const searchable = normalize([ex.name, ex.category, ex.equipment, ex.description, ex.level, ...ex.variations, ...ex.aliases].join(' '));
       return words.every(word => searchable.includes(word)) &&
-        (category === 'all' || (category === 'foundations' ? ex.foundation : ex.category === category)) &&
+        (category === 'all' || (category === 'foundations' ? ex.foundation : category === 'Rings' ? /rings/i.test(ex.equipment) : ex.category === category)) &&
         (unit === 'all' || ex.unit === unit) &&
+        (level === 'all' || ex.level === level) &&
         (status === 'all' || (status === 'practiced' ? practiced.has(ex.id) : !practiced.has(ex.id)));
     }).sort((a, b) => Number(b.foundation) - Number(a.foundation) || a.name.localeCompare(b.name));
   }
@@ -147,7 +153,7 @@
     ];
     return state;
   }
-  const api = { AXES, EXERCISES, filterSkills, today, dateAt, shiftDate, weekStart, id, emptyState, exercise, metric, entriesFor, best, goalProgress, validateState, makeDemo };
+  const api = { AXES, EXERCISES, SKILL_SOURCES, filterSkills, today, dateAt, shiftDate, weekStart, id, emptyState, exercise, metric, entriesFor, best, goalProgress, validateState, makeDemo };
   root.Forma = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);
