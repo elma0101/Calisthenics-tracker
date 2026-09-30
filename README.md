@@ -42,6 +42,19 @@ See [the complete skill catalog and research references](SKILL-CATALOG.md) for t
 
 Open **Endurance** to find Push endurance, Pull endurance, Mini Leg Blaster, and Cindy. Every card lists exercises in order, sets and reps, rounds or a time limit, and rest guidance. The page also contains an example four-week block: 3, 3, optionally 4, then 2 rounds, with Monday push, Wednesday pull, and Friday legs. Cindy is an alternative timed session.
 
+The **Essentials** tab keeps these four workouts. The **Advanced** tab opens by default and adds four programs inspired by YouTube creators. Each has an independent four-week progression, source link, readiness guidance, and adjustable logging. All advanced prescriptions are Forma adaptations, not creator-authored programs or verified challenge scores.
+
+| Advanced program | Standard work | Weeks 1 / 2 / 3 / 4 | Inspiration |
+| --- | --- | --- | --- |
+| 200-rep push builder | 20 push-ups per set; 60–90 sec rest | 8 / 9 / 10 / 6 sets | [THENX / Chris Heria’s 200-push-up challenge](https://www.youtube.com/watch?v=yjBWjaY6JSw) |
+| 100-rep pull builder | 5 strict pull-ups per set; 90–120 sec rest | 16 / 18 / 20 / 12 sets | [THENX’s 100 Pull-Up Challenge](https://thenx.com/blogs/news/100-pull-up-challenge-2021) |
+| 300-rep leg builder | 30 squats + 20 reverse lunges (10 per leg); 30–60 sec between movements, 90–120 sec between rounds | 4 / 5 / 6 / 3 rounds | [K Boges’ high-rep squat training](https://www.youtube.com/watch?v=guG1LT7ejDU) |
+| 50 / 100 density practice | 5 pull-ups + 10 push-ups; 15–30 sec between movements, 60–90 sec between rounds | 8 / 9 / 10 / 6 rounds | [The Proof’s challenge on That’s Good Money](https://www.youtube.com/watch?v=-6Hs4AaZ2Xo) |
+
+Lower-volume options use 10 push-ups, 3 pull-ups, 20 squats + 10 lunges, or 3 pull-ups + 6 push-ups respectively. The pull builder also has a separately tracked assisted option. The card previews week one of the standard option; the dialog and its progression table recalculate totals for the selected week and variant. Week-three targets change with the lower-volume options.
+
+Use the advanced push, pull, and leg sessions as replacements for their essential counterparts. The density session replaces an upper-body day. Progress only when the prior dose is controlled and recovery is adequate; repeat weeks as needed and reduce work in week four. The app does not reproduce daily challenge schedules, enforce a five-minute time target, or save planned work as completed. Log actual sets, reps, and elapsed duration, including rest. Sources were checked on September 30, 2026.
+
 **View & log** opens workout options and a result form. Pull has an assisted option, legs has a no-jump option, and Cindy includes its 12-minute beginner version. The four-week selector changes the planned dose for the three separate circuits; it does not mark workouts completed or schedule sessions automatically.
 
 Enter completed rounds, then review and edit actual sets, reps, duration, and effort in the normal session form. Nothing is saved until **Save session**. Cindy also accepts extra reps in the next unfinished round, in exercise order. Partial rounds become separate efforts so they are counted accurately, and per-set records are not inflated by the whole workout's volume. Different reps within a circuit can be adjusted or split into more efforts before saving.

@@ -15,9 +15,23 @@
   const sources = {
     stew: { label: 'Stew Smith · submaximal circuits', url: 'https://www.stewsmithfitness.com/blogs/news/14296809-daily-push-ups-and-pull-ups-why' },
     mti: { label: 'MTI · Mini Leg Blaster', url: 'https://fitness.mtntactical.com/exercises/details.php?id=leg-blaster' },
-    cindy: { label: 'CrossFit · Cindy', url: 'https://www.crossfit.com/cindy' }
+    cindy: { label: 'CrossFit · Cindy', url: 'https://www.crossfit.com/cindy' },
+    heria200: { label: 'THENX / Chris Heria · 200 push-ups', url: 'https://www.youtube.com/watch?v=yjBWjaY6JSw', channel: 'THENX / Chris Heria' },
+    thenx100: { label: 'THENX · 100 Pull-Up Challenge', url: 'https://thenx.com/blogs/news/100-pull-up-challenge-2021', channel: 'THENX' },
+    boges: { label: 'K Boges · High-rep bodyweight squats', url: 'https://www.youtube.com/watch?v=guG1LT7ejDU', channel: 'K Boges' },
+    goodMoney: { label: 'That’s Good Money · The Proof’s 50 / 100 challenge', url: 'https://www.youtube.com/watch?v=-6Hs4AaZ2Xo', channel: 'That’s Good Money' }
   };
   const move = (exercise, reps, note = '') => ({ exercise, reps, note });
+  const buildCycle = doses => doses.map((rounds, i) => ({
+    week: i + 1, rounds,
+    title: ['Establish your baseline', 'Build if recovered', 'Target week', 'Reduce & recover'][i],
+    description: [
+      'Use this dose only if it is close to work you already tolerate. Otherwise choose the lower-volume option.',
+      'Advance only after completing the previous dose with controlled reps and recovering between sessions. Otherwise repeat it.',
+      'Reach the target only if week two stayed controlled. Keep the same rest; adding volume is enough.',
+      'Reduce the number of sets. Reassess before another block; do not add a max-rep test on top.'
+    ][i]
+  }));
   const circuits = [
     {
       id: 'push', name: 'Push endurance', category: 'Push', image: 'dip', day: 'Monday', kind: 'rounds',
@@ -55,6 +69,59 @@
         { id: 'standard', name: 'Standard · 20 minutes', minutes: 20, moves: [move('pull-up', 5), move('push-up', 10), move('squat', 15)] },
         { id: 'beginner', name: 'Beginner · 12 minutes', minutes: 12, moves: [move('ring-row', 3), move('assisted-push-up', 6), move('squat', 9)] }
       ]
+    },
+    {
+      id: 'advanced-push', name: '200-rep push builder', category: 'Push', image: 'push-up', kind: 'rounds', level: 'advanced',
+      target: 'Build toward 10 × 20', day: 'Monday', cycle: buildCycle([8, 9, 10, 6]),
+      description: 'Accumulate quality push-ups in repeatable sets. Week three reaches 200 reps with the standard option.',
+      rest: '60–90 sec between sets; extend the rest if clean reps would otherwise break down',
+      readiness: 'Start with a set size you can repeat while leaving about two clean reps in reserve. Use 10-rep sets if 20 is too close to your limit.',
+      method: 'Complete one push-up set, rest, then repeat. Log each actual set size separately if your reps change.',
+      attribution: 'Forma adaptation inspired by the 200-rep target in THENX / Chris Heria’s challenge. We use standard push-ups, planned rest, and a four-week cycle; the video uses multiple variations. The daily challenge schedule is not used here.', source: 'heria200',
+      variants: [
+        { id: 'standard', name: '20-rep sets · 200-rep target', moves: [move('push-up', 20)] },
+        { id: 'lower-volume', name: '10-rep sets · 100-rep target', moves: [move('push-up', 10)] }
+      ]
+    },
+    {
+      id: 'advanced-pull', name: '100-rep pull builder', category: 'Pull', image: 'pull-up', kind: 'rounds', level: 'advanced',
+      target: 'Build toward 20 × 5', day: 'Wednesday', cycle: buildCycle([16, 18, 20, 12]),
+      description: 'Spread a large pulling target across small, strict sets. Week three reaches 100 reps.',
+      rest: '90–120 sec between sets; keep the rest consistent when comparing sessions',
+      readiness: 'Choose strict only if five clean reps remain repeatable well below your maximum. The assisted option keeps its own records.',
+      method: 'Use one consistent grip and a controlled range of motion. Record band or assistance details in session notes.',
+      attribution: 'Forma adaptation inspired by THENX’s bodyweight 100 Pull-Up Challenge. The five-rep sets, rest intervals, and four-week cycle are our programming; they do not reproduce the video’s grip sequence.', source: 'thenx100',
+      variants: [
+        { id: 'standard', name: 'Strict · 5-rep sets', moves: [move('pull-up', 5)] },
+        { id: 'assisted', name: 'Assisted · 5-rep sets', moves: [move('assisted-pull-up', 5, 'Record the assistance used')] },
+        { id: 'lower-volume', name: 'Strict · 3-rep sets / 60-rep target', moves: [move('pull-up', 3)] }
+      ]
+    },
+    {
+      id: 'advanced-legs', name: '300-rep leg builder', category: 'Legs', image: 'bodyweight-squat', kind: 'rounds', level: 'advanced',
+      target: 'Build toward 6 × 50', day: 'Friday', cycle: buildCycle([4, 5, 6, 3]),
+      description: 'Alternate squats and reverse lunges for a high-volume leg session without jumping.',
+      rest: '30–60 sec after squats · 90–120 sec after lunges, before the next round',
+      readiness: 'Use a comfortable range of motion and a repeatable pace. Start with the lower-volume option if 50 reps per round is a large jump from your usual work.',
+      method: 'Complete the listed squats, then alternating reverse lunges. Lunge reps count both legs together; the per-leg count appears under the exercise.',
+      attribution: 'Forma adaptation inspired by K Boges’ high-rep squat training. The squat-and-lunge pairing, set sizes, rest, and weekly doses are ours; this is not his 525-rep set or his daily routine.', source: 'boges',
+      variants: [
+        { id: 'standard', name: '50 reps per round · 300-rep target', moves: [move('squat', 30), move('reverse-lunge', 20, '10 per leg')] },
+        { id: 'lower-volume', name: '30 reps per round · 180-rep target', moves: [move('squat', 20), move('reverse-lunge', 10, '5 per leg')] }
+      ]
+    },
+    {
+      id: 'advanced-density', name: '50 / 100 density practice', category: 'Push + pull', image: 'pull-up', kind: 'rounds', level: 'advanced',
+      target: 'Build toward 50 pulls + 100 pushes', cycle: buildCycle([8, 9, 10, 6]),
+      description: 'Pair small pull-up and push-up sets. At ten rounds, you reach the familiar 50 / 100 rep target.',
+      rest: '15–30 sec between movements · 60–90 sec between rounds',
+      readiness: 'Choose this in place of a push or pull session. Keep both set sizes repeatable and leave recovery time before more upper-body work.',
+      method: 'Alternate the listed pull-up and push-up sets each round. Record total elapsed time, including rest. This is practice with planned breaks, not a five-minute challenge attempt.',
+      attribution: 'Forma adaptation inspired by the rep target in The Proof’s challenge on That’s Good Money. Alternating small sets, the rest schedule, and the four-week cycle are ours. These training results are not equivalent to the original challenge score.', source: 'goodMoney',
+      variants: [
+        { id: 'standard', name: '5 pulls + 10 pushes per round', moves: [move('pull-up', 5), move('push-up', 10)] },
+        { id: 'lower-volume', name: '3 pulls + 6 pushes per round', moves: [move('pull-up', 3), move('push-up', 6)] }
+      ]
     }
   ];
   const weeks = [
@@ -65,6 +132,12 @@
   ];
   function getCircuit(id) { return circuits.find(c => c.id === id); }
   function getVariant(circuit, id) { return circuit?.variants.find(v => v.id === id); }
+  function getWeeks(circuit) { return circuit.cycle || weeks; }
+  function plan(circuit, variant, week = 1) {
+    const dose = getWeeks(circuit).find(w => w.week === week);
+    if (!dose || !variant || !circuit.variants.includes(variant)) throw new Error('Choose a valid workout option and cycle week.');
+    return { ...dose, totalReps: dose.rounds * variant.moves.reduce((n, m) => n + m.reps, 0) };
+  }
   function resultEntries(circuitId, variantId, completedRounds, extraReps = []) {
     const circuit = getCircuit(circuitId), variant = getVariant(circuit, variantId);
     if (!variant) throw new Error('Choose a valid circuit and option.');
@@ -84,7 +157,7 @@
     if (!entries.length) throw new Error('Enter at least one completed rep.');
     return entries;
   }
-  const api = { exercises, sources, circuits, weeks, getCircuit, getVariant, resultEntries };
+  const api = { exercises, sources, circuits, weeks, getCircuit, getVariant, getWeeks, plan, resultEntries };
   root.FormaCircuits = api;
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : globalThis);

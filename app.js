@@ -51,6 +51,7 @@
   let inventoryFilters = { query: '', category: 'all', status: 'all', unit: 'all', level: 'all' };
   let inventoryView = 'cards';
   let draftCircuit = null;
+  let circuitLevel = 'advanced';
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -59,9 +60,9 @@
   const style = axis => `--axis:${AXES[axis].color};--tint:${({skills:'#f9ede5',endurance:'#eaf0e4',weighted:'#efebf5'})[axis]}`;
   const iconPaths = {
     grid: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
-    skill: '<circle cx="12" cy="4" r="2"/><path d="M12 6v6m-7-4 7 3 7-3M12 12l-5 8m5-8 5 8M4 21h5m6 0h5"/>',
-    endurance: '<path d="M3 12h4l3-8 4 16 3-8h4"/>',
-    weight: '<path d="M7 12h10M3 9v6m4-9v12M17 6v12m4-9v6M3 12h4m10 0h4"/>',
+    skill: '<path d="M11.5 30h10" stroke-opacity=".18" stroke-width="1.3"/><g fill="currentColor" stroke="none"><path d="M16.8 13.3c-2.9 0-5.2-1.5-7.2-2.4L4.8 8.8c-1-.5-1.2-1-1.8-1.2-.7-.2-.9.4-.9 1.3v.9c.1.9.5 1.1 1.2.7l1.4-.3 5.9 3.8c1.7 1.5 3.1 1.8 4.9 2.1Z" fill-opacity=".58"/><path d="M15.5 13.4c1.3-1.5 1.8-3.7 2.3-6l1.5-4.6c.2-.8.5-1 1.4-1l2.8.1c.9 0 1.1.2 1.4.8l-3.4.9-.6 5-1.9 6Z"/><path d="M18.2 18.5c2 1.5 3.8 2.5 5.4 3.2l4.7 1.9c.7.4 1 .8 1.1 1.7v.6l-1.3-.7-.6-.7c-2.5-.6-4.6-1.5-6.2-1.8l-4.2-1.6Z" fill-opacity=".66"/><path d="M15.1 12.2c1.9-.3 3.2.7 3.5 2.6l.9 3.9c.3 1.6-.8 3-2.3 3l-2.3-.9c-1.6-.3-2.4-1.5-1.5-3.2l1-2Z"/><path d="m14.8 20.1 2.2.9c-.5 2.3.3 5.4.8 7l.4 1.5c.1.5-.1.5-.6.5h-3.4l1.8-1-.8-2.3c-1.4-2.9-1.1-4.6-.4-6.6Z"/><circle cx="13.4" cy="21.8" r="2.05"/></g><path d="m16.4 15 .7 2.8" stroke="white" stroke-opacity=".46" stroke-width="1.1"/>',
+    endurance: '<path d="m2.3 14.9 27.4 15.8" stroke-opacity=".35" stroke-width="1.5"/><path d="M17.4 8.6c.4 4.2-2.1 7.9-6.4 8.3-4.3.5-8-2.4-8.4-6.6-.4-4.1 2.5-7.4 6.4-7.8 4.2-.5 8 2 8.4 6.1Z" fill="currentColor" fill-opacity=".18" stroke-width="1.7"/><path d="M5.9 8.4a5 5 0 0 1 5-3.4" stroke="white" stroke-opacity=".72" stroke-width="1.5"/><path d="m5.5 12.3 2.2 1.9 3.6-.3" stroke-opacity=".23" stroke-width="1.1"/><path d="m21.6 16.2-3.5.6-2-3.5" stroke-opacity=".56" stroke-width="2.5"/><g fill="currentColor" stroke="none"><circle cx="20" cy="12.9" r="1.95"/><path d="M20.8 15.5c1.3-.9 2.4-.1 3.3 1.1l2.1 3.3c.8 1.4.1 2.5-1.2 2.9-1.6.5-2.7-.4-3.1-1.7l-1.8-3.5c-.4-.8-.2-1.5.7-2.1Z"/></g><path d="m22 16.2-3.2-1.3-1.5-3.2" stroke-width="2.5"/><path d="m23.8 21.2-5.2.2 2.1 4-1.9.1" stroke-width="2.9"/><path d="m25 21.2.8 4.5 2 3.6-2.1-.2" stroke-opacity=".65" stroke-width="2.8"/><path d="m22.4 17.7 1.3 2" stroke="white" stroke-opacity=".4" stroke-width=".9"/>',
+    weight: '<g stroke-width="1.7"><rect x="10.5" y="13.8" width="11" height="4.4" rx=".8" fill="currentColor" fill-opacity=".18"/><path d="M2 14v4h3v-4Zm25 0v4h3v-4Z" fill="currentColor" fill-opacity=".38"/><rect x="4.2" y="10.2" width="4.2" height="11.6" rx="1.2" fill="currentColor" fill-opacity=".28"/><rect x="23.6" y="10.2" width="4.2" height="11.6" rx="1.2" fill="currentColor" fill-opacity=".28"/><rect x="7.5" y="6.8" width="4.5" height="18.4" rx="1.4" fill="currentColor" fill-opacity=".52"/><rect x="20" y="6.8" width="4.5" height="18.4" rx="1.4" fill="currentColor" fill-opacity=".52"/><path d="M9.2 9.4v5.1m12.5-5.1v5.1m-8.1 1.2h4.8" stroke="white" stroke-opacity=".68" stroke-width="1.15"/></g>',
     history: '<path d="M3 11a9 9 0 1 1 2 7M3 4v7h7m2-5v6l4 2"/>',
     target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
     settings: '<path d="m9 3-1 3-3 1 1 3-2 2 2 2-1 3 3 1 1 3h6l1-3 3-1-1-3 2-2-2-2 1-3-3-1-1-3Z"/><circle cx="12" cy="12" r="3"/>',
@@ -82,7 +83,7 @@
     info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/>',
     spark: '<path d="m12 2 2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5Z"/>'
   };
-  const icon = name => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.grid}</svg>`;
+  const icon = name => `<svg ${['skill','endurance','weight'].includes(name)?'class="axis-symbol" viewBox="0 0 32 32"':'viewBox="0 0 24 24"'} fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[name] || iconPaths.grid}</svg>`;
   const hydrateIcons = () => $$('[data-icon]').forEach(el => { el.innerHTML = icon(el.dataset.icon); });
   let toastTimer;
   function toast(message) { clearTimeout(toastTimer); $('#toast').textContent = message; $('#toast').classList.add('visible'); toastTimer = setTimeout(() => $('#toast').classList.remove('visible'), 4500); }
@@ -229,11 +230,33 @@
   function circuitMoves(variant, rounds) {
     return `<ol class="circuit-moves">${variant.moves.map(m=>`<li><span>${escape(F.exercise('endurance',m.exercise).name)}${m.note?`<small>${escape(m.note)}</small>`:''}</span><strong>${rounds?`${rounds} × `:''}${m.reps}<small>${rounds?'sets × reps':'reps / round'}</small></strong></li>`).join('')}</ol>`;
   }
+  function circuitCycleRows(circuit, variant) {
+    return `<ol class="program-weeks">${C.getWeeks(circuit).map(week=>{
+      const dose=C.plan(circuit,variant,week.week);
+      return `<li><span>Week ${week.week}</span><div><strong>${week.rounds} ${variant.moves.length===1?'sets':'rounds'} · ${dose.totalReps} reps</strong><small>${escape(week.title)}</small></div></li>`;
+    }).join('')}</ol>`;
+  }
+  function circuitCard(c) {
+    const v=c.variants[0], advanced=c.level==='advanced', dose=C.plan(c,v), source=C.sources[c.source];
+    const footer=advanced?'Week 1 shown · choose your week':c.id==='pull'?'Assisted option available':c.id==='legs'?'No-jump option available':c.id==='cindy'?'12-minute beginner option':'Editable reps when logging';
+    return `<article class="circuit-card ${advanced?'advanced-card':''}">
+      <div class="circuit-card-heading"><div><span class="circuit-category">${escape(c.category)}${advanced?' <span class="advanced-badge">Advanced</span>':''}</span><h3>${escape(c.name)}</h3><p>${advanced?escape(c.target):c.kind==='amrap'?`${v.minutes} minutes · AMRAP`:`${dose.rounds} rounds · ${c.day}`}</p></div><img src="assets/skills/${c.image}.png" alt="" width="90" height="90" loading="lazy"></div>
+      <p class="circuit-description">${escape(c.description)}</p>
+      ${advanced?`<div class="program-dose"><span>WEEK 1</span><strong>${dose.rounds} ${v.moves.length===1?'sets':'rounds'} <span>·</span> ${dose.totalReps} total reps</strong></div>`:''}
+      ${circuitMoves(v,c.kind==='rounds'?dose.rounds:null)}
+      <div class="circuit-rest">${icon('clock')}<span>${escape(c.rest)}</span></div>
+      ${advanced?`<details class="program-progression"><summary>Four-week progression</summary>${circuitCycleRows(c,v)}<p>Keep these reps per set. Advance only when the previous week is controlled and you have recovered; otherwise repeat it.</p></details><div class="program-reference"><span>Forma adaptation · inspired by</span><a href="${source.url}" target="_blank" rel="noopener noreferrer">${escape(source.channel)} ↗</a></div>`:''}
+      <div class="circuit-card-footer"><small>${footer}</small><button class="button secondary small" data-action="circuit" data-id="${c.id}" aria-label="View and log ${escape(c.name)}">View & log ${icon('arrow')}</button></div>
+    </article>`;
+  }
+  function renderCircuitCollection() {
+    const advanced=circuitLevel==='advanced', collection=C.circuits.filter(c=>(c.level==='advanced')===advanced);
+    const intro=advanced?`<div class="advanced-intro"><div><span class="eyebrow">CAPACITY, BUILT OVER TIME</span><h3>Bigger targets. Quality reps.</h3><p>Four programs inspired by popular YouTube challenges, with Forma’s own sets, rest, and progression. Start from a dose you already tolerate and use the lower-volume options when needed.</p></div><span class="program-count">04<small>ADVANCED PROGRAMS</small></span></div><p class="program-guidance">Warm up with easy movement and lighter sets. Leave about two clean reps in reserve, reduce the dose when form fades, and stop a movement if it hurts.</p>`:`<p class="panel-subtitle">Follow the exercises in order. One round is one set of each movement. Adjust the reps to leave about two good reps in reserve.</p>`;
+    const schedule=advanced?`<section class="cycle-block"><div class="section-heading"><h3>Fit the challenge into your week.</h3><span>EXAMPLE SCHEDULE</span></div><p>Monday: push · Wednesday: pull · Friday: legs. The density workout replaces a push or pull session. Allow at least a recovery day before training the same muscles hard again, and account for your skills and weighted sessions.</p><p>Each program has its own four-week doses. Repeat a week when needed; the final week reduces volume. Use these as training sessions, not daily challenge attempts.</p><small>All four advanced programs are Forma adaptations. Open a source link to see the creator’s original challenge; your logged training is not a competition score.</small></section>`:`<section class="cycle-block" aria-labelledby="cycle-title"><div class="section-heading"><h3 id="cycle-title">Make it a four-week block.</h3><span>EXAMPLE SCHEDULE</span></div><p>Monday: push · Wednesday: pull · Friday: legs. Choose Cindy as an alternative session and account for your skills and weighted training.</p><div class="cycle-weeks">${C.weeks.map(w=>`<div><span>WEEK ${w.week} · ${w.rounds} ROUNDS</span><h4>${w.title}</h4><p>${w.description}</p></div>`).join('')}</div><small>This is a Forma example progression for the three separate circuits. Cindy keeps its own time limit.</small></section>`;
+    return `${intro}<div class="circuit-grid">${collection.map(circuitCard).join('')}</div>${schedule}`;
+  }
   function renderCircuits() {
-    return `<section class="endurance-circuits" aria-labelledby="circuits-title"><div class="section-heading"><div><div class="eyebrow">A PLAN FOR EVERY EFFORT</div><h2 id="circuits-title">Your endurance circuits.</h2></div><span>4 WORKOUTS</span></div><p class="panel-subtitle">Follow the exercises in order. One round is one set of each movement. Adjust the reps to leave about two good reps in reserve.</p><div class="circuit-grid">${C.circuits.map(c=>{
-      const v=c.variants[0];
-      return `<article class="circuit-card"><div class="circuit-card-heading"><div><span class="circuit-category">${c.category}</span><h3>${c.name}</h3><p>${c.kind==='amrap'?`${v.minutes} minutes · AMRAP`:'3 rounds · '+c.day}</p></div><img src="assets/skills/${c.image}.png" alt="" width="90" height="90" loading="lazy"></div><p class="circuit-description">${c.description}</p>${circuitMoves(v,c.kind==='rounds'?3:null)}<div class="circuit-rest">${icon('clock')}<span>${c.rest}</span></div><div class="circuit-card-footer"><small>${c.id==='pull'?'Assisted option available':c.id==='legs'?'No-jump option available':c.id==='cindy'?'12-minute beginner option':'Editable reps when logging'}</small><button class="button secondary small" data-action="circuit" data-id="${c.id}" aria-label="View and log ${c.name}">View & log ${icon('arrow')}</button></div></article>`;
-    }).join('')}</div><section class="cycle-block" aria-labelledby="cycle-title"><div class="section-heading"><h3 id="cycle-title">Make it a four-week block.</h3><span>EXAMPLE SCHEDULE</span></div><p>Monday: push · Wednesday: pull · Friday: legs. Choose Cindy as an alternative session and account for your skills and weighted training.</p><div class="cycle-weeks">${C.weeks.map(w=>`<div><span>WEEK ${w.week} · ${w.rounds} ROUNDS</span><h4>${w.title}</h4><p>${w.description}</p></div>`).join('')}</div><small>This is a Forma example progression for the three separate circuits. Cindy keeps its own time limit.</small></section></section>`;
+    return `<section class="endurance-circuits" aria-labelledby="circuits-title"><div class="section-heading"><div><div class="eyebrow">A PLAN FOR EVERY EFFORT</div><h2 id="circuits-title">Your endurance programs.</h2></div><span>${C.circuits.length} WORKOUTS</span></div><div class="program-tabs" role="group" aria-label="Endurance program level">${['essentials','advanced'].map(level=>`<button type="button" data-action="circuit-level" data-level="${level}" aria-pressed="${level===circuitLevel}">${level==='advanced'?'Advanced':'Essentials'} <span>${C.circuits.filter(c=>(c.level==='advanced')===(level==='advanced')).length}</span></button>`).join('')}</div><div id="circuit-collection">${renderCircuitCollection()}</div></section>`;
   }
   function openCircuit(id) {
     const c=C.getCircuit(id);if(!c)return;
@@ -246,18 +269,40 @@
     draftCircuit.extras=$$('[data-extra]',form).map(el=>el.value===''?0:Number(el.value));
   }
   function renderCircuitForm() {
-    const d=draftCircuit,c=C.getCircuit(d.id),v=C.getVariant(c,d.variant),w=C.weeks[d.week-1],source=C.sources[c.source];
-    openDialog(`${dialogHead(c.name,c.kind==='amrap'?'Repeat the sequence within the time limit.':'One round. Every exercise. Repeat at your own pace.')}<form id="circuit-form" class="dialog-body"><div class="form-grid ${c.kind==='amrap'?'single':''}"><label>Workout option<select id="circuit-variant">${c.variants.map(option=>`<option value="${option.id}" ${option.id===v.id?'selected':''}>${option.name}</option>`).join('')}</select></label>${c.kind==='rounds'?`<label>Cycle week<select id="circuit-week">${C.weeks.map(week=>`<option value="${week.week}" ${week.week===d.week?'selected':''}>Week ${week.week} · ${week.rounds} rounds</option>`).join('')}</select></label>`:''}</div><div class="circuit-prescription"><span class="circuit-category">${c.kind==='amrap'?`${v.minutes}-minute AMRAP`:`Week ${w.week} · ${w.rounds} planned rounds`}</span>${circuitMoves(v,c.kind==='rounds'?w.rounds:null)}<p class="circuit-rest">${icon('clock')}<span>${c.rest}</span></p>${c.kind==='rounds'?`<p class="field-hint">${w.description}</p>`:''}</div><label>Completed full rounds<input name="rounds" type="number" min="${c.kind==='amrap'?0:1}" max="100" step="1" value="${escape(d.rounds)}" placeholder="${c.kind==='amrap'?'e.g. 5':`Planned: ${w.rounds}`}" required inputmode="numeric"></label><p class="field-hint">Enter what you actually completed. You can adjust each exercise’s sets and reps on the next screen.</p>${c.kind==='amrap'?`<fieldset class="circuit-extras"><legend>Extra reps in the next unfinished round</legend><p class="field-hint">Count in exercise order. Leave zero where you stopped.</p><div class="form-grid three">${v.moves.map((m,i)=>`<label>${escape(F.exercise('endurance',m.exercise).name)}<input data-extra="${i}" type="number" min="0" max="${m.reps}" step="1" value="${d.extras[i]||0}" inputmode="numeric"><small>0–${m.reps} reps</small></label>`).join('')}</div></fieldset>`:''}<details class="circuit-source"><summary>About this workout</summary><p>${c.attribution}</p><a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.label} ↗</a></details><div id="circuit-error" class="form-error" role="alert"></div><div class="dialog-footer"><button type="button" class="button secondary" data-action="close">Cancel</button><button type="submit" class="button primary">Review session ${icon('arrow')}</button></div></form>`);
+    const d=draftCircuit,c=C.getCircuit(d.id),v=C.getVariant(c,d.variant),w=C.plan(c,v,d.week),source=C.sources[c.source],advanced=c.level==='advanced';
+    const single=v.moves.length===1, countLabel=single?'Completed sets':'Completed full rounds';
+    openDialog(`${dialogHead(c.name,c.kind==='amrap'?'Repeat the sequence within the time limit.':advanced?'Choose your option and cycle week, then log the work you completed.':'One round. Every exercise. Repeat at your own pace.')}
+      <form id="circuit-form" class="dialog-body">
+        <div class="form-grid ${c.kind==='amrap'?'single':''}">
+          <label>Workout option<select id="circuit-variant">${c.variants.map(option=>`<option value="${option.id}" ${option.id===v.id?'selected':''}>${escape(option.name)}</option>`).join('')}</select></label>
+          ${c.kind==='rounds'?`<label>Cycle week<select id="circuit-week">${C.getWeeks(c).map(week=>`<option value="${week.week}" ${week.week===d.week?'selected':''}>Week ${week.week} · ${week.rounds} ${single?'sets':'rounds'}</option>`).join('')}</select></label>`:''}
+        </div>
+        ${advanced?`<p class="program-readiness">${escape(c.readiness)}</p>`:''}
+        <div class="circuit-prescription"><span class="circuit-category">${c.kind==='amrap'?`${v.minutes}-minute AMRAP`:`Week ${w.week} · ${w.rounds} planned ${single?'sets':'rounds'}${advanced?' · '+w.totalReps+' reps':''}`}</span>
+          ${circuitMoves(v,c.kind==='rounds'?w.rounds:null)}
+          <p class="circuit-rest">${icon('clock')}<span>${escape(c.rest)}</span></p>
+          ${advanced?`<p class="field-hint">${escape(c.method)}${v.id==='lower-volume'?' The lower-volume option uses the rep counts shown above.':''}</p>`:''}
+          ${c.kind==='rounds'?`<p class="field-hint">${escape(w.description)}</p>`:''}
+        </div>
+        ${advanced?`<details class="program-progression"><summary>All four weeks · selected option</summary>${circuitCycleRows(c,v)}</details>`:''}
+        <label>${countLabel}<input name="rounds" type="number" min="${c.kind==='amrap'?0:1}" max="100" step="1" value="${escape(d.rounds)}" placeholder="${c.kind==='amrap'?'e.g. 5':`Planned: ${w.rounds}`}" required inputmode="numeric"></label>
+        <p class="field-hint">Enter what you actually completed. Adjust individual sets and reps on the next screen, including any unfinished round.</p>
+        ${c.kind==='amrap'?`<fieldset class="circuit-extras"><legend>Extra reps in the next unfinished round</legend><p class="field-hint">Count in exercise order. Leave zero where you stopped.</p><div class="form-grid three">${v.moves.map((m,i)=>`<label>${escape(F.exercise('endurance',m.exercise).name)}<input data-extra="${i}" type="number" min="0" max="${m.reps}" step="1" value="${d.extras[i]||0}" inputmode="numeric"><small>0–${m.reps} reps</small></label>`).join('')}</div></fieldset>`:''}
+        <details class="circuit-source"><summary>${advanced?'Source & adaptation':'About this workout'}</summary><p>${escape(c.attribution)}</p><a href="${source.url}" target="_blank" rel="noopener noreferrer">${escape(source.label)} ↗</a></details>
+        <div id="circuit-error" class="form-error" role="alert"></div><div class="dialog-footer"><button type="button" class="button secondary" data-action="close">Cancel</button><button type="submit" class="button primary">Review session ${icon('arrow')}</button></div>
+      </form>`);
   }
   function reviewCircuit(event) {
     event.preventDefault();captureCircuitForm();
-    const d=draftCircuit,c=C.getCircuit(d.id),v=C.getVariant(c,d.variant);
+    const d=draftCircuit,c=C.getCircuit(d.id),v=C.getVariant(c,d.variant),w=C.plan(c,v,d.week);
     try {
-      if(d.rounds==='')throw new Error('Enter the number of rounds you completed.');
+      if(d.rounds==='')throw new Error('Enter the number of completed sets or rounds.');
       const rounds=Number(d.rounds),entries=C.resultEntries(c.id,v.id,rounds,d.extras),extra=d.extras.reduce((n,reps)=>n+reps,0);
-      const context=c.kind==='amrap'?`${v.minutes}-minute AMRAP · ${rounds} full rounds + ${extra} extra reps`:`Week ${d.week} · ${rounds} completed rounds (${C.weeks[d.week-1].rounds} planned)`;
-      draftSession={id:F.id(),axis:'endurance',date:F.today(),duration:c.kind==='amrap'?v.minutes:'',rpe:7,entries,notes:`${c.name} · ${v.name}\n${context}\nRest: ${c.rest}`,editing:false,circuitNotice:`${c.name} · ${context}`};
+      const context=c.kind==='amrap'?`${v.minutes}-minute AMRAP · ${rounds} full rounds + ${extra} extra reps`:`Week ${d.week} · ${rounds} completed ${v.moves.length===1?'sets':'rounds'} (${w.rounds} planned)`;
+      draftSession={id:F.id(),axis:'endurance',date:F.today(),duration:c.kind==='amrap'?v.minutes:'',rpe:7,entries,notes:`${c.name} · ${v.name}\n${context}\nRest: ${c.rest}${c.level==='advanced'?'\nForma adaptation · '+C.sources[c.source].channel:''}`,editing:false,circuitNotice:`${c.name} · ${context}`};
       renderSessionForm();
+      $('#editor-dialog').scrollTop=0;
+      $('#dialog-title').setAttribute('tabindex','-1');$('#dialog-title').focus();
     } catch(error) { $('#circuit-error').textContent=error.message; }
   }
   function renderAxis(axis) {
@@ -310,7 +355,7 @@
   }
   function renderSessionForm() {
     const s=draftSession;
-    openDialog(`${dialogHead(s.editing?'Edit your session':demo?'Log a demo session':'Log your session',demo?'You’re editing sample data. Your personal journal stays separate.':'The effort is yours. Let’s make a note of it.')}<form id="session-form" class="dialog-body">${s.circuitNotice?`<div class="circuit-session-note"><strong>${escape(s.circuitNotice)}</strong><p>Review your completed sets and reps. Nothing is recorded until you save this session.</p></div>`:axisSelector(s.axis,'session-axis')}<div class="form-grid three"><label>Date<input name="date" type="date" value="${escape(s.date)}" min="2000-01-01" max="${F.today()}" required></label><label>Duration (min)<input name="duration" type="number" min="1" max="600" step="1" value="${escape(s.duration)}" required></label><label>Effort / 10<select name="rpe">${Array.from({length:10},(_,i)=>`<option value="${i+1}" ${+s.rpe===i+1?'selected':''}>${i+1}${i===0?' · Easy':i===6?' · Challenging':i===9?' · Maximum':''}</option>`).join('')}</select></label></div><div class="form-section-label">Your movements</div><div id="session-entries">${s.entries.map((e,i)=>entryForm(e,i,s.axis)).join('')}</div><p class="field-hint" style="margin-bottom:12px">Each effort groups sets with the same result. Add another effort if your reps, hold time, or load changed.</p><button type="button" class="add-exercise" data-action="add-entry" ${s.entries.length>=30?'disabled':''}>${icon('plus')}Add an effort</button><label>Session notes <small>Optional</small><textarea name="notes" maxlength="2000" placeholder="How did it feel? What’s worth remembering?">${escape(s.notes)}</textarea></label><div class="form-error" id="form-error" role="alert"></div><div class="dialog-footer"><span class="left-note">${demo?'Sample workspace':'Saved in your browser'}</span><button type="button" class="button secondary" data-action="close">Cancel</button><button type="submit" class="button primary">${icon('check')}${s.editing?'Save changes':'Save session'}</button></div></form>`);
+    openDialog(`${dialogHead(s.editing?'Edit your session':demo?'Log a demo session':'Log your session',demo?'You’re editing sample data. Your personal journal stays separate.':'The effort is yours. Let’s make a note of it.')}<form id="session-form" class="dialog-body">${s.circuitNotice?`<div class="circuit-session-note"><strong>${escape(s.circuitNotice)}</strong><p>Review your completed sets and reps. If you change the workout, update the round summary in notes. Nothing is recorded until you save.</p></div>`:axisSelector(s.axis,'session-axis')}<div class="form-grid three"><label>Date<input name="date" type="date" value="${escape(s.date)}" min="2000-01-01" max="${F.today()}" required></label><label>Duration (min)<input name="duration" type="number" min="1" max="600" step="1" value="${escape(s.duration)}" required></label><label>Effort / 10<select name="rpe">${Array.from({length:10},(_,i)=>`<option value="${i+1}" ${+s.rpe===i+1?'selected':''}>${i+1}${i===0?' · Easy':i===6?' · Challenging':i===9?' · Maximum':''}</option>`).join('')}</select></label></div><div class="form-section-label">Your movements</div><div id="session-entries">${s.entries.map((e,i)=>entryForm(e,i,s.axis)).join('')}</div><p class="field-hint" style="margin-bottom:12px">Each effort groups sets with the same result. Add another effort if your reps, hold time, or load changed.</p><button type="button" class="add-exercise" data-action="add-entry" ${s.entries.length>=30?'disabled':''}>${icon('plus')}Add an effort</button><label>Session notes <small>Optional</small><textarea name="notes" maxlength="2000" placeholder="How did it feel? What’s worth remembering?">${escape(s.notes)}</textarea></label><div class="form-error" id="form-error" role="alert"></div><div class="dialog-footer"><span class="left-note">${demo?'Sample workspace':'Saved in your browser'}</span><button type="button" class="button secondary" data-action="close">Cancel</button><button type="submit" class="button primary">${icon('check')}${s.editing?'Save changes':'Save session'}</button></div></form>`);
   }
   function savedToast(message) { toast(storageAvailable?message:'Changes are in memory only. Export a backup before closing.'); }
   function saveSession(event) {
@@ -378,6 +423,12 @@
       case 'goal':startGoal(axis,null,el.dataset.exercise);break;
       case 'skill-details':showSkill(el.dataset.exercise);break;
       case 'circuit':openCircuit(id);break;
+      case 'circuit-level':
+        if(['essentials','advanced'].includes(el.dataset.level)){
+          circuitLevel=el.dataset.level;
+          $('#circuit-collection').innerHTML=renderCircuitCollection();
+          $$('[data-action="circuit-level"]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.level===circuitLevel)));
+        }break;
       case 'inventory-category':inventoryFilters.category=el.dataset.category;updateInventoryResults();break;
       case 'inventory-view':inventoryView=el.dataset.view;updateInventoryResults();$$('[data-action="inventory-view"]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.view===inventoryView)));break;
       case 'inventory-reset':inventoryFilters={query:'',category:'all',status:'all',unit:'all',level:'all'};render();$('#inventory-search').focus();break;
@@ -404,8 +455,8 @@
   });
   document.addEventListener('change',event=>{
     const el=event.target;
-    if(el.id==='circuit-variant'){captureCircuitForm();draftCircuit.variant=el.value;draftCircuit.extras=C.getVariant(C.getCircuit(draftCircuit.id),el.value).moves.map(()=>0);renderCircuitForm();}
-    else if(el.id==='circuit-week'){captureCircuitForm();draftCircuit.week=Number(el.value);renderCircuitForm();}
+    if(el.id==='circuit-variant'){captureCircuitForm();draftCircuit.variant=el.value;draftCircuit.extras=C.getVariant(C.getCircuit(draftCircuit.id),el.value).moves.map(()=>0);renderCircuitForm();$('#circuit-variant').focus();}
+    else if(el.id==='circuit-week'){captureCircuitForm();draftCircuit.week=Number(el.value);renderCircuitForm();$('#circuit-week').focus();}
     else if(['inventory-status','inventory-unit','inventory-level'].includes(el.id)){inventoryFilters[el.id.slice('inventory-'.length)]=el.value;updateInventoryResults();}
     else if(el.id==='chart-exercise'){chartExercise[page]=el.value;render();}
     else if(el.id==='chart-variation'){chartVariation[chartExercise[page]]=el.value;render();}

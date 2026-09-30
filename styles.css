@@ -74,6 +74,38 @@
 .inventory-pose{font-size:9px;line-height:1.5;color:#74816b;margin:0 0 9px}.inventory-list .inventory-pose{font-size:9px;margin-bottom:5px}
 
 /* Endurance circuits */
+.program-tabs{display:flex;gap:5px;width:max-content;max-width:100%;padding:5px;margin:19px 0 22px;border:1px solid var(--line);border-radius:12px;background:#eceee4}
+.program-tabs button{display:flex;align-items:center;gap:12px;padding:10px 17px;border-radius:8px;color:#74816b;font-size:12px}
+.program-tabs button[aria-pressed=true]{background:var(--forest);color:#fffdf4;box-shadow:0 3px 8px #24382e12}
+.program-tabs button span{font-size:10px;opacity:.65}
+.advanced-intro{display:flex;justify-content:space-between;align-items:center;gap:25px;padding:28px 30px;background:#e6ecdc;border:1px solid #d9e2ce;border-radius:17px}
+.advanced-intro h3{font-family:Manrope,sans-serif;font-size:26px;letter-spacing:-.9px;margin:10px 0 12px}
+.advanced-intro p{font-size:12px;line-height:1.8;color:#728167;max-width:650px}
+.program-count{font-family:Manrope,sans-serif;font-size:52px;letter-spacing:-3px;color:#7b8f69;text-align:right;flex-shrink:0}
+.program-count small{display:block;font-family:'DM Sans',sans-serif;font-size:8px;letter-spacing:1px;margin-top:6px}
+.program-guidance{font-size:11px;line-height:1.8;color:#7b8770;margin:15px 0 25px;max-width:800px}
+.advanced-badge{display:inline-block;margin-left:7px;font-size:7px;letter-spacing:.5px;border:1px solid #d9cbb7;padding:3px 5px;border-radius:4px;color:#927252;background:#f5eddf}
+.advanced-card .circuit-card-heading{align-items:flex-start}
+.advanced-card .circuit-card-heading>div{min-width:0}
+.advanced-card .circuit-card-heading img{width:76px;height:76px;flex-shrink:0}
+.advanced-card .circuit-description{max-width:none}
+.program-dose{display:flex;justify-content:space-between;gap:10px;align-items:center;background:#eff2e8;border-radius:7px;padding:10px 12px;margin:8px 0 0}
+.program-dose>span{font-size:8px;letter-spacing:.8px;color:#7d8c70}
+.program-dose strong{font-size:11px;font-weight:500;color:#4a6040}
+.program-dose strong span{margin:0 4px;color:#a1ad93}
+.program-progression{margin:20px 0 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:0 0 2px}
+.program-progression summary{cursor:pointer;font-size:11px;font-weight:500;padding:13px 0;color:#536b48}
+.program-progression>p{font-size:10px;line-height:1.7;color:#7c8a70;margin:10px 0 14px}
+.program-weeks{list-style:none;margin:0;padding:0}
+.program-weeks li{display:flex;align-items:center;gap:18px;padding:10px 0;border-top:1px solid var(--line)}
+.program-weeks li>span{font-size:10px;color:#849078;min-width:44px}
+.program-weeks strong{font-size:11px;font-weight:600}
+.program-weeks small{display:block;font-size:9px;color:#8c9581;margin-top:4px}
+.program-reference{display:flex;flex-wrap:wrap;gap:4px 7px;font-size:9px;line-height:1.7;margin-top:5px;color:#86917a}
+.program-reference a{color:#596f4f;text-decoration:underline;text-underline-offset:3px}
+.program-readiness{font-size:11px;line-height:1.8;color:#7a896e;margin:17px 0}
+.form-grid.single{grid-template-columns:1fr}
+@media(max-width:650px){.advanced-intro{padding:22px;gap:15px;align-items:start}.advanced-intro h3{font-size:23px}.advanced-intro p{font-size:11px}.program-count{display:none}.program-tabs button{padding:10px 15px}.advanced-card .circuit-card-heading img{width:68px;height:68px}.advanced-card .circuit-card-heading h3{font-size:20px}.program-dose{flex-wrap:wrap}.program-guidance{font-size:10px}}
 .endurance-circuits{margin:36px 0 40px}
 .endurance-circuits>.section-heading{align-items:end;margin-bottom:10px}
 .endurance-circuits .eyebrow{font-size:8px;color:#809075;margin-bottom:9px}
@@ -121,3 +153,14 @@
 .circuit-session-note p{font-size:11px;color:#748469;margin-top:4px}
 @media(max-width:1000px){.circuit-card{padding:20px}.circuit-card h3{font-size:18px}.circuit-card-heading img{width:75px;height:75px}.cycle-weeks{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.circuit-grid{grid-template-columns:1fr;gap:16px}.circuit-card{padding:22px}.circuit-card h3{font-size:21px}.circuit-card-heading img{width:85px;height:85px}.cycle-block{padding:22px}.cycle-block>.section-heading{align-items:start;flex-direction:column;gap:9px}.cycle-weeks{gap:18px 12px}.circuit-extras .form-grid.three{grid-template-columns:1fr}.circuit-extras .form-grid.three>label:first-child{grid-column:auto}.circuit-prescription{padding:17px}.circuit-card-footer .button{padding:9px 11px}.circuit-card-footer small{max-width:145px}}
+
+/* Custom training-axis marks: handstand, uphill endurance, and load. */
+.axis-icon{width:44px;height:44px;border-radius:14px;position:relative;isolation:isolate;background:linear-gradient(145deg,#ffffff80,#ffffff00 68%),var(--tint);box-shadow:inset 0 0 0 1px #ffffff95,0 2px 5px #24382e06}
+.axis-icon::before{content:'';position:absolute;inset:5px;border:1px solid currentColor;border-radius:10px;opacity:.09;z-index:-1}
+.axis-icon .axis-symbol{width:30px;height:30px}
+.session-axis-icon{background:linear-gradient(145deg,#ffffff70,#ffffff00 70%),var(--tint);box-shadow:inset 0 0 0 1px #ffffff70}
+.session-axis-icon .axis-symbol{width:23px;height:23px}
+.nav-item .axis-symbol{width:21px;height:21px}
+.axis-option .axis-symbol{width:25px;height:25px}
+.axis-pill .axis-symbol{width:16px;height:16px}
+@media(max-width:520px){.nav-item .axis-symbol{width:20px;height:20px}.axis-option .axis-symbol{width:23px;height:23px}.exercise-card>.axis-icon{width:40px;height:40px}.exercise-card>.axis-icon .axis-symbol{width:28px;height:28px}}
