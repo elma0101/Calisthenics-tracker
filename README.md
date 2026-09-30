@@ -2,6 +2,10 @@
 
 A responsive progress tracker built with HTML, CSS, and vanilla JavaScript. No framework, build step, account, or backend is required.
 
+## Continue development
+
+Read [HANDOFF.md](HANDOFF.md) for the completed features, setup, code map, data compatibility rules, and a continuation prompt. Read [ROADMAP.md](ROADMAP.md) for the proposed remaining features, priorities, and acceptance criteria.
+
 ## Open the app
 
 Open `index.html` in a modern browser. Keep `index.html`, `styles.css`, `skill-catalog.js`, `endurance-circuits.js`, `core.js`, `app.js`, and the `assets` folder together.
